@@ -1,0 +1,196 @@
+\documentclass[aps,prb,floatfix,amsmath,amssymb,groupedaddress]{revtex4}
+
+\usepackage{graphicx}
+\usepackage{psfrag}
+\usepackage{epstopdf}
+\usepackage{bm}
+\usepackage[justification=raggedright]{caption}
+\usepackage{subfig}
+\usepackage{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage{mdwlist}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{breqn}
+\newtheorem{prop}{Proposition}
+\newtheorem{qsn}{Question}
+\makeatletter
+\RequirePackage{keyval}
+\usepackage{empheq}
+
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+
+\begin{document}
+
+\providecommand{\half}{{\frac{1}{2}}}		% I don't use this, but it's a good reminder on how to make a command.
+
+\title{Intro to Optical Lattices}
+
+\author{Hunter Swan}
+
+\maketitle
+
+This is a brief introduction to optical lattices, and a few interesting problems from my personal explorations in this area.
+
+The fundamental idea underlying optical lattices is the \textit{dipole force}, which is a force felt by a two-level atom in a time varying electric field.  I will derive this effect below, but in the interest of getting to lattice physics quickly, I will just state the result for now:  For a two level atom with energy difference $\omega_0$ in the presense of an electric field $\vec{E}(\vec{x})\cos(\omega t)$, the atom feels an effective potential 
+
+\begin{equation} %%%%%%%%%%%%%%% Dipole force
+V(\vec{x}) = -\frac{\hbar \Gamma^2}{8\Delta} \left(\frac{\half c \epsilon_0 \left|\vec{E}(\vec{x})\right|^2}{I_{SAT}}\right) =: -\frac{\hbar\Gamma^2 s}{8\Delta}
+\label{dipoleForce}
+\end{equation}
+where
+\begin{itemize}
+\item $\Gamma$ is the linewidth of the atomic transition.
+\item $\Delta:= \omega-\omega_0$ is the \textit{detuning} of the light from the atomic transition. 
+\item $I_{SAT}$ is a characteristic intensity for the atomic transition, called the \textit{saturation intensity}.  It has formula $$I_{SAT} = \frac{2\pi^2}{3} \frac{\Gamma}{\lambda^2} \hbar f$$ where $f$ and $\lambda$ are the frequency and wavelength (resp.) of the atomic transition.  Noting that $\Gamma$ is the inverse lifetime of the transition (i.e. $\Gamma = 1/\tau$, where $\tau$ is the lifetime of the upper state), we interpret this formula as ``one photon energy per square wavelength per transition time'', multiplied by the numeric factor $2\pi^2/3$.
+\item $s:= \left(\half c \epsilon_0 \left|\vec{E}(\vec{x})\right|^2\right)/I_{SAT} $ is the dimensionless intensity of the light. 
+\end{itemize}
+The important point is that this potential depends only on the \textit{time averaged} local intensity of the field.  The fact that it depends only on the \textit{time average} deserves special emphasis (hence the italics), as this will be used below.  This time averaging is essentially the ``rotating wave approximation'', and comes from a scale separation between $\omega$ and the other relevant energy scales in the problem.  I'll be vague about what those energy scales are, exactly, but will clarify later when I derive the expression for the dipole force.  
+
+An optical lattice arises from the interference of some number $n$ of lasers.  We will assume that each laser's electric field can be treated as a plane wave $\vec{A}_j \cos\left(\vec{k}_j \cdot \vec{x} - \omega_j t + \phi_j(t)\right)$, for $j\in \{1,2,\dots,n\}$ (we take $\vec{A}_j$ to be real here).  The intensity of the combined electric field is then 
+
+\begin{eqnarray*}
+I & \propto & \left| \sum_j \vec{A}_j \cos\left(\vec{k}_j \cdot \vec{x} - \omega_j t + \phi_j(t)\right) \right|^2 \\
+& = & \sum_j A_j^2 \cos^2\left(\vec{k}_j \cdot \vec{x} - \omega_j t + \phi_j(t)\right) + 2 \sum_{j < l} \vec{A}_j \cdot \vec{A}_l \cos\left( \vec{k}_j \cdot \vec{x} - \omega_j t + \phi_j(t)\right)\cos\left( \vec{k}_l \cdot \vec{x} - \omega_l t + \phi_l(t)\right) \\
+& = & \sum_j A_j^2 \cos^2\left(\vec{k}_j \cdot \vec{x} - \omega_j t + \phi_j(t)\right) + \sum_{j < l} \vec{A}_j \cdot \vec{A}_l \cos\left( \left(\vec{k}_j - \vec{k}_l\right) \cdot \vec{x} - \left(\omega_j - \omega_l\right) t + \left(\phi_j(t) - \phi_l(t)\right) \right) \\
+& &  + \sum_{j < l} \vec{A}_j \cdot \vec{A}_l  \cos\left( \left(\vec{k}_j + \vec{k}_l\right) \cdot \vec{x} - \left(\omega_j + \omega_l\right) t + \left(\phi_j(t) + \phi_l(t)\right) \right) \\
+\end{eqnarray*}
+Now the big simplification comes from observing that, so long as the frequencies of the various lasers are close to each other, the first and third terms above vary much more rapidly than the middle term.  In fact, if the lasers have identical frequencies, the middle term is a totally static potential.  Because we care only about the time averaged intensity, we thus discard the first and third terms, leaving our optical lattice potential: 
+$$ V(\vec{x}) = \sum_{j < l} \vec{A}_j \cdot \vec{A}_l \cos\left( \left(\vec{k}_j - \vec{k}_l\right) \cdot \vec{x} - \left(\omega_j - \omega_l\right) t + \left(\phi_j(t) - \phi_l(t)\right) \right) $$
+
+To simplify notation, we introduce $A_{jl} := \vec{A}_j \cdot \vec{A}_l$, $k_{jl} := \vec{k}_j - \vec{k}_l$, $\omega_{jl} := \omega_j - \omega_l$, and $\phi_{jl}(t) = \phi_j(t) - \phi_l(t)$, and drop the arrows on vectors, so that the above becomes 
+\begin{equation} %%%%%%%%%%%%%%%%%%% Potential
+V(\vec{x}) = \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)
+\label{potential}
+\end{equation}
+This is the optical lattice potential.  
+
+A few observations:
+\begin{itemize}
+\item There are $\binom{n}{2}$ terms in the above sum, and the same number of vectors $k_{jl}$.  In particular, you need at least 2 lasers for this sum to be non-trivial, and in this case you get a 1D lattice along the direction of $k_{12} = k_1-k_2$.
+\item The vectors $k_{jl}$ are not linearly independent for $n>2$.  Indeed, for any three vectors $k_{1,2,3}$ we have $k_{23} = k_{13}-k_{12}$.  To get $m$ linearly independent vectors $k_{jl}$, you need $n\geq m+1$ lasers.  So for a 2D lattice you need at least 3 lasers, and for a 3D lattice at least 4 lasers.  
+\item The preceding remarks imply that to make a 2D or 3D square lattice consisting of superposed cosine potentials along orthogonal directions (the ostensibly ``simplest'' kind of lattice), it is necessary to use more than the minimal number of lasers and choose polarizations judiciously.  For example, in 2D, you can point 2 lasers along the $\pm\hat{x}$ with a polarization along $\hat{y}$ and 2 other lasers along $\pm \hat{y}$ directions, with polarization along $\hat{x}$.
+\end{itemize}
+
+\section{Interaction pictures and Galilean transformations} %%%%%%%%%%%%%  Interaction picture
+We recall some facts about interaction pictures and Galilean transformations, which will be useful in analysing the lattice Hamiltonian.
+
+Given a state $\psi$ evolving under a Hamiltonian $H$ and a time dependent unitary transformation $U(t) = e^{i M t/\hbar}$ for some Hermitian $M$, we can ``transform into an interaction picture'' by considering the evolution of a state $U(t) \psi$:
+\begin{eqnarray*}
+i\hbar\partial_t \left(U(t) \psi\right) & = & \left(i\hbar\partial_t U(t)\right) \psi + U(t) \left(i\hbar\partial_t \psi\right) \\
+& = & - M U(t) \psi + U(t) H \psi \\
+& = & U(t) \left(H-M\right)U^\dagger(t) U(t)\psi
+\end{eqnarray*}
+This says that $U(t)\psi$ evolves like a state would under the alternative Hamiltonian $U(t) \left(H-M\right)U^\dagger(t)$.
+
+%A \textit{Galilean transformation} transforms $x$ and $p$ simultaneously, and has the form
+%\begin{equation}
+%G(a,b):= \exp\left(  \right)\exp\left(  \right)\exp\left(  \right)
+%\end{equation}
+
+%\section{Lattice Hamiltonian}
+%The Hamiltonian $$\frac{p^2}{2m} + \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)$ derived from the lattice potential (\ref{potential}) can be recast in several different forms by use of various interaction pictures.  Applying a unitary $U(t) = \exp\left(-i a(t) p/\hbar\right)$, i.e. a translation, yields the Hamiltonian
+%$$H = \frac{p^2}{2m} + 
+
+%\subsection{Momentum space form}
+%Note that the lattice potential (\ref{potential}) can be written
+%\begin{eqnarray}
+%V(x) & = & \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right) \\
+%& = & \half \sum_{j<l} A_{jl} \left(e^{i\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)} + e^{-i\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)}\right) \\
+%& = & \half \sum_{j<l} A_{jl} \left(K\{\hbar k_{jl}\}e^{i\left(- \omega_{jl} t + \phi_{jl}(t)\right)} + K\{-\hbar k_{jl}\}e^{-i\left(- \omega_{jl} t + \phi_{jl}(t)\right)}\right) \\
+%\end{eqnarray}
+%Where $K\{a\}:=e^{ia\cdot x/\hbar}$ is a momentum translation operator (so $K\{-a\}pK\{a\} = p+a$).  This leads to a nice matrix representation of the Hamiltonian.  In particular, with 
+
+
+\section{Dipole force}
+In this section we derive the dipole force.  We begin by considering a two level atom with frequency $\omega_0$ and basis $\left|0\right>, \left|1\right>$.  We impose an electric field $\vec{E}_0\cos(\omega t)$, so that the total Hamiltonian is $$H = \hbar \omega_0 \left|1\right>\left<1\right| - \vec{d}\cdot\vec{E}\cos(\omega t)$$ where $\vec{d}$ is the dipole operator for the atom (explicitly, $\vec{d} = \sum_j e \vec{r}_j$, where the sum is over all electrons in the atom and $r_j$ is the position operator for electron $j$).  We define the \textit{Rabi frequency} to be $\Omega = \left<1\right| \vec{E}_0\cdot \vec{d} \left| 0\right>/\hbar$.  Then the matrix form of the Hamiltonian is $$H = 
+\begin{bmatrix}
+0 & \hbar\Omega \cos(\omega t) \\
+\hbar \Omega^* \cos(\omega t) & \hbar \omega_0 
+\end{bmatrix}
+$$
+To solve this, we first eliminate the ``easy'' part of the Hamiltonian by transforming to an interaction frame via the unitary $$U = \exp\left(i\omega_0 \left|1\right>\left<1\right|\right) = 
+\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\omega_0 t}
+\end{bmatrix}
+$$ 
+In the interaction frame the effective Hamiltonian is then 
+\begin{eqnarray*} U(H-\omega_0 \left|1\right>\left<1\right|)U^\dagger & = & 
+\begin{bmatrix}
+0 & \hbar\Omega \cos(\omega t) e^{-i\omega_0 t} \\
+\hbar \Omega^* \cos(\omega t) e^{i\omega_0 t} & 0
+\end{bmatrix} \\
+& = & 
+\begin{bmatrix}
+0 & \half \hbar\Omega e^{i\Delta t} \\
+\half\hbar \Omega^* e^{-i\Delta t} & 0
+\end{bmatrix}
++ 
+\begin{bmatrix}
+0 & \half \hbar\Omega e^{-i(\omega + \omega_0) t} \\
+\half \hbar \Omega^* e^{i(\omega + \omega_0) t} & 0
+\end{bmatrix} \\
+\end{eqnarray*}
+Where again $\Delta=\omega - \omega_0$.
+
+At this point we make a key approximation: The ``rotating wave approximation.''  This amounts to discarding the second term in the preceding expression.  The justification for doing so is that, provided $\omega + \omega_0 \gg \Delta, |\Omega|$, the second term rotates much faster than the first term, and so only the time average of the second term is relevant to the slow speed dynamics.  The time average is zero in this case, so we just discard the second term.  
+
+More rigorously, it can be shown that for a Hamiltonian of the form $H = H_0 + K e^{i \gamma t} + K^\dagger e^{-i \gamma t}$, provided that the spectrum of $H_0$ is bounded for all time, the time evolution operators $\exp(iH_0 t/\hbar)$ and $\exp(iHt/\hbar)$ at any fixed time $t$ converge as $\gamma\rightarrow \infty$.  The convergence rate is determined by the ratio of $\gamma$ to $\frac{\Delta |H_0|}{\Delta + |H_0|}$.  In words, as $\gamma$ gets to be much larger than $\Delta, |H_0|$, the effect of the perturbations $K, K^\dagger$ vanishes. 
+
+By the way, in practice, $\omega+\omega_0 \approx 10^{14}$ Hz, $\Delta\approx $ GHz, and $|\Omega|\approx$ MHz are typical.  
+
+So our effective Hamiltonian is now $$H' = 
+\begin{bmatrix}
+0 & \half \hbar\Omega e^{i\Delta t} \\
+\half\hbar \Omega^* e^{-i\Delta t} & 0
+\end{bmatrix}
+$$
+We apply one more unitary transformation $$U = 
+\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\omega_0 t}
+\end{bmatrix}
+$$ 
+which transforms the Hamiltonian into $$H'' = 
+\begin{bmatrix}
+0 & \half \hbar\Omega \\
+\half \hbar \Omega^* & -\hbar\Delta
+\end{bmatrix}
+$$ 
+which at last is a time independent Hamiltonian.  It has eigenenergies
+\begin{equation}
+E_{\pm} = -\half \hbar \Delta \pm \half \hbar \sqrt{\Delta^2 + |\Omega|^2}
+\label{eigs}
+\end{equation}
+For large detuning $\Delta \gg |\Omega|$, this becomes
+\begin{eqnarray}
+E_+ & \approx & \frac{\hbar |\Omega|^2}{4\Delta} \\ \nonumber
+E_- & \approx & -\hbar \Delta - \frac{\hbar |\Omega|^2}{4\Delta}
+\end{eqnarray}
+
+Now the key observation is the following: $|\Omega|^2$ depends on the electric field strength.  If the field strength varies spatially, a slow moving atom will adiabatically track the ground state, so that the ground state energy $E_-$ looks like a spatial potential.  To understand the nature of this potential we need one more formula relating $\Omega$ to the field strength $\vec{E}_0$.  This relation comes from the ``Wigner-Weiskopf'' theory of atomic lineshapes, which states that the dipole moment $\left<1\right| \vec{d}\left|0\right>$ is related to the linewidth $\Gamma$ by $$\hbar\Gamma = \frac{k_0^3 \; |\left<1\right| \vec{d}\left|0\right>|^2}{3\pi\epsilon_0}$$ Where $k_0=\omega_0/c$ is the k-vector of the atomic transition.  Recalling the definition of the Rabi frequency, and defining $\theta$ to be the angle between $\vec{E}$ and $\vec{d}$, we find that 
+\begin{eqnarray}
+|\Omega|^2 & = & |\vec{E}|^2 \left| \left<1\right| \vec{d}\left|0\right>\right|^2 \cos^2(\theta) /\hbar^2 \\
+& = & |\vec{E}|^2 \frac{3\pi\epsilon_0 \hbar\Gamma}{k_0^3}\cos^2(\theta)/\hbar^2 \\
+& = & \half \Gamma^2 \left(\half \epsilon_0 c |\vec{E}|^2\right) \left(\frac{6\pi}{ck_0^3 \hbar \Gamma}\right) \cos^2(\theta) \\
+& = & \half \Gamma^2 \left(\half \epsilon_0 c |\vec{E}|^2\right) \left(\frac{3\lambda_0^2}{2\pi^2\hbar f_0 \Gamma}\right) \cos^2(\theta) \\
+& = & \half \Gamma^2 \left(\half \epsilon_0 c |\vec{E}|^2\right) I_{SAT}^{-1} \cos^2(\theta) \\
+& = & \half s \Gamma^2 \cos^2(\theta)
+\end{eqnarray}
+Usually the $\cos^2(\theta)$ factor is omitted.  I don't really have a good justification for this, other than that fast dipole dynamics will cause it to relax into parallel alignment with the electric field. 
+
+Using this relation with $\cos^2(\theta)=1$, the spatially varying part of the ground state energy may finally be written $$V(x) = -\frac{\hbar s \Gamma^2}{8\Delta}$$ This is the dipole potential. 
+
+
+
+
+
+
+
+\end{document}
+
+\begin{thebibliography}{99}
+
+\end{thebibliography}
