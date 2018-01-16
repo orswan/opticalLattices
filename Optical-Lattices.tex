@@ -24,6 +24,7 @@
 \begin{document}
 
 \providecommand{\half}{{\frac{1}{2}}}		% I don't use this, but it's a good reminder on how to make a command.
+\providecommand{\dt}{{\partial_t}}
 
 \title{Intro to Optical Lattices}
 
@@ -61,16 +62,54 @@ $$ V(\vec{x}) = \sum_{j < l} \vec{A}_j \cdot \vec{A}_l \cos\left( \left(\vec{k}_
 
 To simplify notation, we introduce $A_{jl} := \vec{A}_j \cdot \vec{A}_l$, $k_{jl} := \vec{k}_j - \vec{k}_l$, $\omega_{jl} := \omega_j - \omega_l$, and $\phi_{jl}(t) = \phi_j(t) - \phi_l(t)$, and drop the arrows on vectors, so that the above becomes 
 \begin{equation} %%%%%%%%%%%%%%%%%%% Potential
-V(\vec{x}) = \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)
+V(x) = \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)
 \label{potential}
 \end{equation}
 This is the optical lattice potential.  
 
 A few observations:
 \begin{itemize}
-\item There are $\binom{n}{2}$ terms in the above sum, and the same number of vectors $k_{jl}$.  In particular, you need at least 2 lasers for this sum to be non-trivial, and in this case you get a 1D lattice along the direction of $k_{12} = k_1-k_2$.
-\item The vectors $k_{jl}$ are not linearly independent for $n>2$.  Indeed, for any three vectors $k_{1,2,3}$ we have $k_{23} = k_{13}-k_{12}$.  To get $m$ linearly independent vectors $k_{jl}$, you need $n\geq m+1$ lasers.  So for a 2D lattice you need at least 3 lasers, and for a 3D lattice at least 4 lasers.  
-\item The preceding remarks imply that to make a 2D or 3D square lattice consisting of superposed cosine potentials along orthogonal directions (the ostensibly ``simplest'' kind of lattice), it is necessary to use more than the minimal number of lasers and choose polarizations judiciously.  For example, in 2D, you can point 2 lasers along the $\pm\hat{x}$ with a polarization along $\hat{y}$ and 2 other lasers along $\pm \hat{y}$ directions, with polarization along $\hat{x}$.
+\item There are $\binom{n}{2}$ terms in the above sum, and the same number of vectors $k_{jl}$.  In general, the vectors $k_{jl}$ are not linearly independent, except in the case $n=2$ when there is only one such vector.   Indeed, for any three vectors $k_{1,2,3}$ we have $k_{23} = k_{13}-k_{12}$.  
+\item All difference vectors $k_{jl}$ can be written as integer combinations of the vectors $k_{1l}$.  From this, several corollaries follow: 
+\subitem To get an $m$ dimensional lattice, you need $m$ linearly independent $k_{1l}$, which requires at least $m+1$ lasers.  An $m$ dimensional lattice with $m+1$ lasers plays an important role in what follows, and we refer to it as a ``minimal'' configuration.  
+\subitem A non-minimal configuration of lasers is generically not a lattice.  To be a lattice, some subset of $\{k_{1l}\}$ must generate the rest via integer combinations. 
+\subitem We can make any Bravais lattice into an optical lattice (see proof below). 
+\item The preceding remarks imply that to make a 2D or 3D square lattice consisting of superposed cosine potentials along orthogonal directions (the ostensibly ``simplest'' kind of lattice), it is necessary to choose polarizations judiciously.  For example, in 2D, you can take laser 1 to point along $-\hat{x}-\hat{y}$ with polarization along $\hat{z}+\hat{x}+\hat{y}$, laser 2 to point along $\hat{y}-\hat{x}$ with polarization along $\hat{x}+\hat{y}$, and laser 3 to point along $\hat{x}-\hat{y}$ with polarization along $\hat{z}$.  The difference vectors $k_{1l}$ are then along $\hat{x}$ and $\hat{y}$, and lasers 2 and 3 are orthogonal to each other (but not to laser 1), yielding the desired square lattice.   
+
+Another solution which uses more than the minimal number of lasers is to point two lasers along $\pm\hat{x}$ with a polarization along $\hat{y}$ and two other lasers along $\pm \hat{y}$ directions with polarization along $\hat{x}$.
+\end{itemize}
+
+%%%%%%%%%%%%% 1D lattice
+\subsection{Alternative derivation}
+For a 1D lattice, there is a nice alternative derivation of the lattice potential.  Suppose we have two lasers with identical frequencies, amplitudes, phase, and polarizations, so that their combined electric field can be written
+$$ E = E_0 \cos(k_1 \cdot x - \omega t) + E_0 \cos(k_2 \cdot x - \omega t).$$
+Set $K:=k_1-k_2$ and $L:=\half(k_1 + k_2)$.  Then we have
+\begin{eqnarray}
+E & = & \frac{E_0}{2} \left(e^{i(k_1x-\omega t)}+e^{-i(k_1x-\omega t)}\right) + \frac{E_0}{2} \left(e^{i(k_2x-\omega t)}+e^{-i(k_2x-\omega t)}\right)  \nonumber\\
+& = & \frac{E_0}{2} \left(e^{ik_1x} + e^{ik_2x}\right) e^{-i\omega t} + \frac{E_0}{2} \left(e^{-ik_1x} + e^{-ik_2x}\right)e^{i\omega t}  \nonumber\\
+& = & \frac{E_0}{2} \left(e^{iKx/2} + e^{-iKx/2}\right) e^{i(Lx-\omega t)} + \frac{E_0}{2} \left(e^{-iKx/2} + e^{iKx/2}\right)e^{-i(Lx-\omega t)}  \nonumber\\
+& = & 2E_0\cos(Kx/2)\cos(Lx-\omega t) \nonumber
+\label{lattice1d}
+\end{eqnarray}
+Thus the intensity is $4E_0 \cos^2(Kx/2)$.  Note that the case where $k_1=-k_2$ yields a perfect standing wave ($L=0$).  
+
+\subsection{Any Bravais lattice is an optical lattice}
+Any Bravais lattice can be realized as an optical lattice.  The proof depends on the following lemma: Given linearly independent vectors $b_1,\dots,b_n\in \mathbb{R}^m$, there exists a unique vector $v\in\text{span}\{b_i\}$ such that $|v| = |v+b_i|$ for all $i$.  
+
+\textit{Proof}:  If $m>n$, we can apply a rotation so that $\text{span}\{b_i\} = \{x\in\mathbb{R}^m | \:\forall (i>n) \: x_i=0 \}$, which we identify with $\mathbb{R}^n$.  Hence there is no loss of generality in taking $m=n$.
+
+We have $$|v| = |v+b_i| \iff v\cdot b_i = -\half |b_i|^2.$$  Hence $$[b_1 \dots b_n]^Tv = -\half(|b_1|^2,\dots,|b_n|^2)^T.$$  Since the $b_i$ are linearly independent, $[b_1\dots b_n]$ is invertable, and thus this equation has a unique solution $v$.  QED
+
+Now to make an optical lattice from a given Bravais lattice, take any basis $\{b_i\}_{i=1}^n$ for such a Bravais lattice and the vector $v$ as in the lemma, and pick $n+1$ lasers with $k$ vectors $v$ and $\{b_i+v\}$.  Then the difference vectors $k_{1l}$ will be precisely the desired lattice basis vectors.  Since these difference vectors determine the reciprocal lattice entirely, and since a Bravais lattice is uniquely determined by the reciprocal lattice, we see that this laser configuration will generate the desired Bravais lattice.  It also shows that this configuration is essentially unique, provided we only use the minimal number of (monochromatic) lasers.  
+
+With more lasers, there may be more solutions.  However, given more than the minimum number of lasers in general position, the resulting potential will not be a lattice at all (but possibly a quasicrystal).  To enforce that the potential be a lattice, the ``extra'' difference vectors $k_{1l}$ must all lie on the lattice generated by $k_{12},\dots,k_{1(n+1)}$ (for the case of an $n$ dimensional lattice).  This gives a countably infinite number of potential configurations for each extra laser beyond the minimum number. 
+
+Some interesting things to think about along these lines are: 
+\begin{itemize}
+\item Are all space groups realizable as an optical lattice?
+\item It is possible to make the lattice degenerate by choosing polarizations appropriately (e.g. by choosing one laser of a minimal configuration to be orthogonal to all the others).  Generically this does not happen.  In particular, as long as no polarizations are orthogonal, the lattice is not degenerate, but this is not a necessary condition for non-degeneracy.  What are necessary and sufficient conditions to ensure that the lattice is not degenerate?
+\item Under what conditions does a (necessarily non-minimal) configuration of lasers produce a quasicrystal?
+\item Introducing multiple far-detuned frequencies of laser effectively superposes a lattice for each frequency.  How does this alter the first and third questions above?
 \end{itemize}
 
 \section{Interaction pictures and Galilean transformations} %%%%%%%%%%%%%  Interaction picture
@@ -82,26 +121,67 @@ i\hbar\partial_t \left(U(t) \psi\right) & = & \left(i\hbar\partial_t U(t)\right)
 & = & - M U(t) \psi + U(t) H \psi \\
 & = & U(t) \left(H-M\right)U^\dagger(t) U(t)\psi
 \end{eqnarray*}
-This says that $U(t)\psi$ evolves like a state would under the alternative Hamiltonian $U(t) \left(H-M\right)U^\dagger(t)$.
+This says that $U(t)\psi$ evolves like a state would under the alternative Hamiltonian $U(t) \left(H-M\right)U^\dagger(t)$.  
+
+More generally, for a unitary of the form $U(t) = e^{i M(t)/\hbar}$, where $M(t)$ is now a time dependent Hermitian operator, so long as the time derivative $\dt M$ commutes with $M$ we can repeat the above computation to find that the transformed Hamiltonian is $H' = U(t)(H-\dt M)U^\dagger(t)$.
 
 %A \textit{Galilean transformation} transforms $x$ and $p$ simultaneously, and has the form
 %\begin{equation}
 %G(a,b):= \exp\left(  \right)\exp\left(  \right)\exp\left(  \right)
 %\end{equation}
 
-%\section{Lattice Hamiltonian}
-%The Hamiltonian $$\frac{p^2}{2m} + \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)$ derived from the lattice potential (\ref{potential}) can be recast in several different forms by use of various interaction pictures.  Applying a unitary $U(t) = \exp\left(-i a(t) p/\hbar\right)$, i.e. a translation, yields the Hamiltonian
-%$$H = \frac{p^2}{2m} + 
+\section{Lattice Hamiltonian}
+The Hamiltonian $$\frac{p^2}{2m} + \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)$$ derived from the lattice potential (\ref{potential}) can be recast in several different, useful forms by use of various interaction pictures.  Applying a unitary $$U(t) = \exp\left(i \left[a(t) \cdot p - \int \frac{m}{2}\left( \dt a(t)\right)^2 dt\right]/\hbar\right),$$ which is a time-varying spatial translation (note that $a(t)$ should be interpreted as a vector with dimensions of length), along with a phase whose utility will be clear presently, yields the Hamiltonian
+\begin{eqnarray}
+H & = & \frac{p^2}{2m} - \dt a(t) \cdot p + \frac{m}{2}\left(\dt a(t)\right)^2 + \sum_{j<l} A_{jl} \cos\left(k_{jl} \cdot \left(x-a(t)\right) - \omega_{jl} t + \phi_{jl}(t)\right) \nonumber \\
+& = & \frac{\left(p - m \: \dt a(t)\right)^2}{2m} + \sum_{j<l} A_{jl} \cos\left(k_{jl} \cdot \left[x-a(t)\right] - \omega_{jl} t + \phi_{jl}(t)\right)
+\label{sweepH}
+\end{eqnarray}
+The utility of this expression is that, for suitable laser configurations, it allows us to eliminate time dependence of the spatial potential $\Sigma \cos(\cdots)$, shuffling that time dependence to the $p^2/2m$ term instead.  More specifically, to eliminate the time dependence from term $jl$, we must have $-k_{jl}\cdot a(t) - \omega_{jl}t + \phi_{jl}(t) = 0$.  For a minimal laser configuration with $m+1$ lasers, there are $m$ independent such equations, which may be taken to be those with $j=1$.  For $j\neq 1$ the equation for the term $jl$ is the difference of the $1l$ and $1j$ equations.  Since $k_{1l}$ are linearly independent in this case, we may solve the equations uniquely for $a(t)$.  For a non-minimal laser configuration, we may not be able to totally eliminate time dependence in the lattice potential.  
 
-%\subsection{Momentum space form}
-%Note that the lattice potential (\ref{potential}) can be written
-%\begin{eqnarray}
-%V(x) & = & \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right) \\
-%& = & \half \sum_{j<l} A_{jl} \left(e^{i\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)} + e^{-i\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)}\right) \\
-%& = & \half \sum_{j<l} A_{jl} \left(K\{\hbar k_{jl}\}e^{i\left(- \omega_{jl} t + \phi_{jl}(t)\right)} + K\{-\hbar k_{jl}\}e^{-i\left(- \omega_{jl} t + \phi_{jl}(t)\right)}\right) \\
-%\end{eqnarray}
-%Where $K\{a\}:=e^{ia\cdot x/\hbar}$ is a momentum translation operator (so $K\{-a\}pK\{a\} = p+a$).  This leads to a nice matrix representation of the Hamiltonian.  In particular, with 
+Note that in consequence of the preceding observations, for a minimal lattice, all time dependence of the lattice potential can be encapsulated in a trajectory $a(t)$.  This shows that any such time dependence can be interpreted as a motion of the lattice potential.  Such time dependence of the lattice potential is useful for e.g. moving atoms around.  
 
+As a converse to the preceding remarks, note that for a given $a(t)$ we can also eliminate time dependence from a lattice potential by suitable choice of $\omega_{jl}$ or $\phi_{jl}(t)$.  We simply choose $\omega_{1l} t -\phi_{1l}(t) = -k_{1l}\cdot a(t)$ for all $l$, and the remaining $jl$ terms, $j\neq 1$, will also lose their time dependence by the same linear combination argument as above.  Note that in terms of the actual lasers' frequencies $\omega_l$ and $\phi_l(t)$, this does not even fully constrain the system (e.g. we can choose $\omega_1$ and $\phi_1(t)$ arbitrarily, and still satisfy the constraints by appropriate choice of the other lasers' phases and frequencies).  Moreover, in this case minimality of the system is not required to eliminate time dependence. 
+
+Applying another transformation $U(t) = \exp\left( i m x \cdot \dt a(t)/\hbar\right),$ which is a time-varying momentum translation, yields a Hamiltonian 
+\begin{equation}
+\frac{p^2}{2m} - m x\cdot \partial_t^2 a(t) + \sum_{j<l} A_{jl} \cos\left(k_{jl} \cdot \left[x-a(t)\right] - \omega_{jl} t + \phi_{jl}(t)\right)
+\label{gravH}
+\end{equation}
+The middle term in this expression is the potential we would get from a background gravitational (or electric) field. 
+
+The moral of the above computations is that a moving lattice is equivalent to a gravitational field is equivalent to a time varying momentum operator.
+
+A useful application of these ideas is to a situation where there is a physical gravitational field affecting the atoms.  By reversing the above unitary transformations, we see that this is equivalent to a choice of laser phase or frequency.  Thus, by allowing variable phases/frequencies in our Hamiltonian, we incorporate this \textit{a priori} more general situation seemlessly. 
+
+\subsection{Momentum space form}
+The form of the lattice Hamiltonian in a basis of momentum states is particularly amenable to numerical solution.  This is due to the fact that the cosine terms in the lattice potential (\ref{potential}) can be thought of as combinations of momentum translation operators $K[q]:=e^{iq\cdot x/\hbar}$.  In particular, 
+\begin{eqnarray*}
+V(x) & = & \sum_{j<l} A_{jl} \cos\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right) \\
+& = & \half \sum_{j<l} A_{jl} \left(e^{i\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)} + e^{-i\left( k_{jl} \cdot x - \omega_{jl} t + \phi_{jl}(t)\right)}\right) \\
+& = & \half \sum_{j<l} A_{jl} \left(K[\hbar k_{jl}]e^{i\left(- \omega_{jl} t + \phi_{jl}(t)\right)} + K[-\hbar k_{jl}]e^{-i\left(- \omega_{jl} t + \phi_{jl}(t)\right)}\right) \\
+\end{eqnarray*}
+As usual, in momentum space this lattice Hamiltonian only couples momentum states with identical quasimomentum.  However, viewed as a matrix on the subspace of momentum states with a given quasimomentum, the Hamiltonian has the additional virtue of being very sparse.  For example, for a minimal 1D lattice, the Hamiltonian is tridiagonal.  For a minimal 2D lattice with basis $b_1 = k_{21}$ and $b_2 = k_{31}$, the Hamiltonian couples states that differ in momentum by $\pm b_1$, $\pm b_2$, or $\pm(b_2-b_1)$.  This makes it a joy to solve numerically.  
+
+Note that performing the transformations of the previous section does not affect which states are coupled by the Hamiltonian, though it does affect the coupling coefficients.  We will see in the next section that the Hamiltonian of eq. (\ref{sweepH}) provides a useful way to analyse the behavior of atoms in the lattice.
+
+\subsection{Sweeping}
+We specialize to the case of a minimal lattice, consider the unitaried Hamiltonian (\ref{sweepH}) with $a(t)$ chosen so as to eliminate time dependence from the lattice potential, and examine the time evolution of a state $\left|\Psi\right>$ with definite quasimomentum $q$.  
+
+Let $$H_Q := \frac{\left(p - Q\right)^2}{2m} + \sum_{jl}A_{jl} \cos(k_{jl}\cdot x)$$
+Then our Hamiltonian is $H_{m\dt a(t)}$.  Note that $H_{Q+R} = K[-R]H_Q K[R]$, where $K[R] = \exp(iR\cdot x/\hbar)$ is a momentum translation operator.  
+
+We wish to examine the behavior of this Hamiltonian operating only on the Hilbert space of definite quasimomentum $q$, which we will denote by $\mathcal{S}_q$ (I'm deliberately not using a letter ``H'' here to avoid notational collision between Hamiltonians and Hilbert spaces).  Note that the spectrum of $H_Q$ \textit{on this Hilbert space} is periodic under displacements of $Q$ by reciprocal lattice vectors, for if $\left|\phi\right>$ is an eigenvector of $H_Q$ with eigenvalue $\lambda$ and $R$ is a reciprocal lattice vector, then $K[-R]\left|\phi\right>$ is another vector in $\mathcal{S}_q$, and $$H_{Q+R} \left(K[-R] \left|\phi\right>\right) = K[-R]H_Q K[R] \left(K[-R] \left|\phi\right>\right) = \lambda K[-R]\left|\phi\right>,$$ which shows that this is an eigenvector of $H_{Q+R}$ with eigenvalue $\lambda$.  
+
+(Without the restriction to $\mathcal{S}_q$, the preceding statement is trivial, because the spectrum of a Hamiltonian is always unchanged by any unitary transformation, like $H_Q\rightarrow K[-R]H_Q K[R]$.  However, the spectrum of a Hamiltonian on a fixed subspace \textit{can} change through a unitary transformation.  In this case, the transformed and untransformed Hamiltonians restricted to the subspace are not related by a unitary transformation--only the overall Hamiltonian is transformed unitarily.  In the present case, for $R$ not a reciprocal vector, the restricted transformed Hamiltonian $H_{Q+R}$ does not have the same spectrum as $H_Q$, and thus the two are not related unitarily.)  
+
+From band structure theory, we know that $H_Q$ has a discrete spectrum on $\mathcal{S}_q$, which is generically non-degenerate (although there are interesting cases of degeneracy, as will be seen below).  If state $\left|\Psi\right>$ is initially in the ground state of $H_Q$, and then $Q$ is changed adiabatically in such a way as to avoid degeneracies in $H_Q$, then $\left|\Psi\right>$ will track the instantaneous ground state of $H_Q$.  
+
+Note that the spectrum of $H_Q$ on $\mathcal{S}_q$ is the same as the spectrum of $H_0$ on $\mathcal{S}_{q-Q}$.  This follows from the fact that $H_Q\left|\Psi\right> = K[Q]H_0 K[-Q]\left|\Psi\right>$ and the observation that $K[-Q]\left|\Psi\right>$ has quasimomentum $q-Q$ (where again $q$ is the quasimomentum of $\left|\Psi\right>$).  If $Q$ varies in time, $q-Q$ traces out a path in momentum space, and the spectrum of the Hamiltonian $H_Q$ at any point in time is the spectrum of $H_0$ for quasimomentum $q-Q$.  The time dynamics of $\left|\Psi\right>$ are captured by this path through momentum space, and we speak of ``the quasimomentum sweeping through the Brillouin zone''.  
+
+If $q-Q$ passes sufficiently quickly through a point in the Brillouin zone where the lowest and second lowest bands come close to each other, then adiabaticity may break down, and $\left|\Psi\right>$ may tunnel out of the lowest band into an upper band.  This is called Landau-Zener tunnelling, and is a central concern in optical lattice shuttling (using optical lattices to move atoms).  In the next few sections we will examine this problem, and see how tunnelling corresponds to atoms slipping out of the lattice.  We will also derive analytic expressions approximating the time evolution of $\left|\Psi\right>$. 
+
+\section{Shuttling and Landau-Zener tunnelling}
 
 \section{Dipole force}
 In this section we derive the dipole force.  We begin by considering a two level atom with frequency $\omega_0$ and basis $\left|0\right>, \left|1\right>$.  We impose an electric field $\vec{E}_0\cos(\omega t)$, so that the total Hamiltonian is $$H = \hbar \omega_0 \left|1\right>\left<1\right| - \vec{d}\cdot\vec{E}\cos(\omega t)$$ where $\vec{d}$ is the dipole operator for the atom (explicitly, $\vec{d} = \sum_j e \vec{r}_j$, where the sum is over all electrons in the atom and $r_j$ is the position operator for electron $j$).  We define the \textit{Rabi frequency} to be $\Omega = \left<1\right| \vec{E}_0\cdot \vec{d} \left| 0\right>/\hbar$.  Then the matrix form of the Hamiltonian is $$H = 
