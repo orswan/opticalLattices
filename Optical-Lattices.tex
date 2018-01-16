@@ -71,9 +71,11 @@ A few observations:
 \begin{itemize}
 \item There are $\binom{n}{2}$ terms in the above sum, and the same number of vectors $k_{jl}$.  In general, the vectors $k_{jl}$ are not linearly independent, except in the case $n=2$ when there is only one such vector.   Indeed, for any three vectors $k_{1,2,3}$ we have $k_{23} = k_{13}-k_{12}$.  
 \item All difference vectors $k_{jl}$ can be written as integer combinations of the vectors $k_{1l}$.  From this, several corollaries follow: 
-\subitem To get an $m$ dimensional lattice, you need $m$ linearly independent $k_{1l}$, which requires at least $m+1$ lasers.  An $m$ dimensional lattice with $m+1$ lasers plays an important role in what follows, and we refer to it as a ``minimal'' configuration.  
-\subitem A non-minimal configuration of lasers is generically not a lattice.  To be a lattice, some subset of $\{k_{1l}\}$ must generate the rest via integer combinations. 
-\subitem We can make any Bravais lattice into an optical lattice (see proof below). 
+\begin{itemize}
+\item To get an $m$ dimensional lattice, you need $m$ linearly independent $k_{1l}$, which requires at least $m+1$ lasers.  An $m$ dimensional lattice with $m+1$ lasers plays an important role in what follows, and we refer to it as a ``minimal'' configuration.  
+\item A non-minimal configuration of lasers is generically not a lattice.  To be a lattice, some subset of $\{k_{1l}\}$ must generate the rest via integer combinations. 
+\item We can make any Bravais lattice into an optical lattice (see proof below). 
+\end{itemize}
 \item The preceding remarks imply that to make a 2D or 3D square lattice consisting of superposed cosine potentials along orthogonal directions (the ostensibly ``simplest'' kind of lattice), it is necessary to choose polarizations judiciously.  For example, in 2D, you can take laser 1 to point along $-\hat{x}-\hat{y}$ with polarization along $\hat{z}+\hat{x}+\hat{y}$, laser 2 to point along $\hat{y}-\hat{x}$ with polarization along $\hat{x}+\hat{y}$, and laser 3 to point along $\hat{x}-\hat{y}$ with polarization along $\hat{z}$.  The difference vectors $k_{1l}$ are then along $\hat{x}$ and $\hat{y}$, and lasers 2 and 3 are orthogonal to each other (but not to laser 1), yielding the desired square lattice.   
 
 Another solution which uses more than the minimal number of lasers is to point two lasers along $\pm\hat{x}$ with a polarization along $\hat{y}$ and two other lasers along $\pm \hat{y}$ directions with polarization along $\hat{x}$.
@@ -112,8 +114,8 @@ Some interesting things to think about along these lines are:
 \item Introducing multiple far-detuned frequencies of laser effectively superposes a lattice for each frequency.  How does this alter the first and third questions above?
 \end{itemize}
 
-\section{Interaction pictures and Galilean transformations} %%%%%%%%%%%%%  Interaction picture
-We recall some facts about interaction pictures and Galilean transformations, which will be useful in analysing the lattice Hamiltonian.
+\section{Interaction picture} %%%%%%%%%%%%%  Interaction picture
+We recall some facts about interaction pictures which will be useful in analysing the lattice Hamiltonian.
 
 Given a state $\psi$ evolving under a Hamiltonian $H$ and a time dependent unitary transformation $U(t) = e^{i M t/\hbar}$ for some Hermitian $M$, we can ``transform into an interaction picture'' by considering the evolution of a state $U(t) \psi$:
 \begin{eqnarray*}
