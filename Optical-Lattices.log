@@ -1,9 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.14)  16 JAN 2018 00:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.2.14)  27 JAN 2019 21:53
 entering extended mode
-**"C:/Users/swan/Desktop/Personal research/Optical-Lattices/Optical-Lattices.te
-x"
-("C:/Users/swan/Desktop/Personal research/Optical-Lattices/Optical-Lattices.tex
-"
+**C:/Users/swan/Desktop/Research/Lattices/Tex/opticalLattices/Optical-Lattices.
+tex
+
+(C:/Users/swan/Desktop/Research/Lattices/Tex/opticalLattices/Optical-Lattices.t
+ex
 LaTeX2e <2015/10/01> patch level 2
 Babel <3.9n> and hyphenation patterns for 69 languages loaded.
 (C:\Users\swan\AppData\Roaming\MiKTeX\2.9\tex\latex\revtex4\revtex4.cls
@@ -700,12 +701,12 @@ Non-PDF special ignored!{C:/Users/swan/AppData/Local/MiKTeX/2.9/pdftex/config/p
 dftex.map}] [2] [3] [4] [5] [6] [7] (Optical-Lattices.aux) ) 
 Here is how much of TeX's memory you used:
  14455 strings out of 493634
- 247809 string characters out of 3141317
+ 247816 string characters out of 3141317
  308037 words of memory out of 3000000
  17683 multiletter control sequences out of 15000+200000
  9999 words of font info for 37 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,14n,40p,10456b,275s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,14n,40p,10457b,275s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (
 x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)
@@ -721,7 +722,7 @@ public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/
 amsfonts/symbols/msbm10.pfb>
-Output written on Optical-Lattices.pdf (7 pages, 197251 bytes).
+Output written on Optical-Lattices.pdf (7 pages, 197273 bytes).
 PDF statistics:
  82 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
